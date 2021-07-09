@@ -62,4 +62,15 @@ d3.csv("assets/data/data.csv").then(function (healthData) {
         // .attr("transform", `translate(${width}, 0)`)
         .call(leftAxis)
 
+    // Scatter points
+    var circlesGroup = chartGroup.selectAll("circle")
+    .data(healthData)
+    .enter()
+    .append("circle")
+    .attr("cx", d => d.poverty)
+    .attr("cy", d => d.healthcare)
+    .attr("r", 1)
+    .attr("fill", "pink")
+    .attr("opacity", ".5");
+
 });

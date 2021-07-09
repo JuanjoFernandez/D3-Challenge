@@ -7,3 +7,4 @@
 - Renders x axis
 - Fixes x axis render
 - Renders y axis
+- Renders scatter points
