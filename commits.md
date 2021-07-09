@@ -4,3 +4,6 @@
 
 # 07/09/2021
 - Adds function to xScale
+- Renders x axis
+- Fixes x axis render
+- Renders y axis
