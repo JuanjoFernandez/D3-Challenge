@@ -23,27 +23,29 @@ var chartGroup = svg.append("g")
 
 // Function to create the xScale
 function xScale(healthData, chosenX) {
+    console.log ("ChosenX");
+    console.log (chosenX);
     var xLinearScale = d3.scaleLinear()
         .domain([d3.min(healthData, d => d[chosenX]) * 0.8,
         d3.max(healthData, d => d[chosenX]) * 1.2])
         .range([0, width]);
-    return xLinearScale
+    console.log(xLinearScale);
+    return xLinearScale;
 };
 
 // Reading and parsing the csv
-d3.csv("../assets/data/data.csv").then(function (healthData) {
-    console.log(healthData)
+d3.csv("assets/data/data.csv").then(function (healthData) {
     healthData.forEach(function (data) {
         data.healthcare = +data.healthcare;
         data.poverty = +data.poverty;
     });
 
     // X axis
-    var xLinearScale = xScale(healthData, healthData.poverty);
+    var xLinearScale = xScale(healthData, "poverty");
     var bottomAxis = d3.axisBottom(xLinearScale);
     var xAxis = chartGroup.append("g")
-    .classed("x-axis", true)
-    .attr("transform", `translate(0, ${height})`)
-    .call(bottomAxis);
- 
+        .classed("x-axis", true)
+        .attr("transform", `translate(0, ${height})`)
+        .call(bottomAxis);
+
 });
