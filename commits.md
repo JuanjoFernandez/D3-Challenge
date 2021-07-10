@@ -12,3 +12,5 @@
 - Adds padding in both scales
 - Adds circles labels
     - [] Position is off, needs debugging
+- Adds x-axis labels
+    - [] All labels won't fit, need to make the chart size responsive
