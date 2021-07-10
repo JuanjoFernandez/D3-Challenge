@@ -185,9 +185,7 @@ d3.csv("assets/data/data.csv").then(function (healthData) {
     var yLinearScale = yScale(healthData, chosenY);
     var leftAxis = d3.axisLeft(yLinearScale);
     var yAxis = chartGroup.append("g")
-        // .classed("y-axis", true)
-        // .attr("transform", `translate(${width}, 0)`)
-        .call(leftAxis)
+        .call(leftAxis);
 
     // Scatter points
     var circlesGroup = chartGroup.selectAll("circle")
@@ -335,9 +333,6 @@ d3.csv("assets/data/data.csv").then(function (healthData) {
 
             // Change points labels
             circlesLabels = renderLabelsY(circlesLabels, yLinearScale, chosenY);
-
-            // Change tooltips
-            circlesGroup = renderTooltip(chosenX, circlesGroup);
         }
     });
 });

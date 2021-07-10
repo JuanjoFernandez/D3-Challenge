@@ -29,3 +29,4 @@
 - Adds event listener for y-label
 - Re-renders y axis and scatter points
 - Re-renders scatter points labels
+- Styles the html
