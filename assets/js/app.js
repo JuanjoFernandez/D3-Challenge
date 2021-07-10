@@ -99,6 +99,15 @@ function yScale(healthData, chosenY) {
     return yLinearScale;
 };
 
+// Function to render new y axis
+function renderY(yLinearScale, yAxis) {
+    var leftAxis = d3.axisLeft(yLinearScale);
+    yAxis.transition()
+        .duration(1000)
+        .call(leftAxis);
+    return yAxis;
+}
+
 // Function to update scatter points
 function renderScatter(circlesGroup, xLinearScale, chosenX) {
     circlesGroup.transition()
@@ -244,6 +253,66 @@ d3.csv("assets/data/data.csv").then(function (healthData) {
             // Change axis
             var xLinearScale = xScale(healthData, chosenX);
             xAxis = renderX(xLinearScale, xAxis);
+
+            // Change scatter points
+            circlesGroup = renderScatter(circlesGroup, xLinearScale, chosenX);
+
+            // Change points labels
+            circlesLabels = renderLabels(circlesLabels, xLinearScale, chosenX);
+
+            // Change tooltips
+            circlesGroup = renderTooltip(chosenX, circlesGroup);
+        }
+    });
+
+    // Y-axis
+    yLabels.selectAll("text").on("click", function () {
+        // Grab value clicked
+        var yClicked = d3.select(this).attr("value");
+        if (yClicked !== chosenY) {
+            chosenY = yClicked;
+            // Re-render the graph
+
+            // Change labels status
+            switch (chosenY) {
+                case "obesity":
+                    obeseLabel
+                        .classed("active", true)
+                        .classed("inactive", false);
+                    smokeLabel
+                        .classed("active", false)
+                        .classed("inactive", true);
+                    healthLabel
+                        .classed("active", false)
+                        .classed("inactive", true);
+                    break;
+                case "smokes":
+                    smokeLabel
+                        .classed("active", true)
+                        .classed("inactive", false);
+                    obeseLabel
+                        .classed("active", false)
+                        .classed("inactive", true);
+                    healthLabel
+                        .classed("active", false)
+                        .classed("inactive", true);
+                    break;
+                case "healthcare":
+                    healthLabel
+                        .classed("active", true)
+                        .classed("inactive", false);
+                    smokeLabel
+                        .classed("active", false)
+                        .classed("inactive", true);
+                    obeseLabel
+                        .classed("active", false)
+                        .classed("inactive", true);
+                    break;
+            }
+
+            // Change axis
+            var yLinearScale = yScale(healthData, chosenY);
+            yAxis = renderY(yLinearScale, yAxis);
 
             // Change scatter points
             circlesGroup = renderScatter(circlesGroup, xLinearScale, chosenX);
