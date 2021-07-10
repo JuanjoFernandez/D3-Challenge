@@ -22,36 +22,36 @@ var chartGroup = svg.append("g")
     .attr("transform", `translate(${margin.left}, ${margin.top})`);
 
 // X-axis labels
-  var xLabels = chartGroup.append("g")
-  .attr("transform", `translate(${width / 2}, ${height + 20})`);
+var xLabels = chartGroup.append("g")
+    .attr("transform", `translate(${width / 2}, ${height + 20})`);
 
 var povertyLabel = xLabels.append("text")
-  .attr("x", 0)
-  .attr("y", 20)
-  .attr("value", "poverty") // value to grab for event listener
-  .classed("active", true)
-  .text("Poverty (%)");
+    .attr("x", 0)
+    .attr("y", 20)
+    .attr("value", "poverty") // value to grab for event listener
+    .classed("active", true)
+    .text("Poverty (%)");
 
-  var ageLabel = xLabels.append("text")
-  .attr("x", 0)
-  .attr("y", 40)
-  .attr("value", "age") // value to grab for event listener
-  .classed("active", true)
-  .text("Age (Median)");
+var ageLabel = xLabels.append("text")
+    .attr("x", 0)
+    .attr("y", 40)
+    .attr("value", "age") // value to grab for event listener
+    .classed("active", true)
+    .text("Age (Median)");
 
-  var ageLabel = xLabels.append("text")
-  .attr("x", 0)
-  .attr("y", 40)
-  .attr("value", "income") // value to grab for event listener
-  .classed("active", true)
-  .text("Household Income (Median)");
+var ageLabel = xLabels.append("text")
+    .attr("x", 0)
+    .attr("y", 60)
+    .attr("value", "income") // value to grab for event listener
+    .classed("active", true)
+    .text("Household Income (Median)");
 
 
 // Function to create xScale
 function xScale(healthData, chosenX) {
     var xLinearScale = d3.scaleLinear()
         .domain([d3.min(healthData, d => d[chosenX]) * 0.9,
-        d3.max(healthData, d => d[chosenX])*1.05])
+        d3.max(healthData, d => d[chosenX]) * 1.05])
         .range([0, width]);
     return xLinearScale;
 };
