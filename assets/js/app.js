@@ -64,7 +64,7 @@ var smokeLabel = yLabels.append("text")
     .classed("inactive", true)
     .text("Smokes (%)");
 
-var smokeLabel = yLabels.append("text")
+var healthLabel = yLabels.append("text")
     .attr("y", -65)
     .attr("x", - height / 2)
     .attr("value", "healthcare")// value to grab for event listener
@@ -176,7 +176,7 @@ d3.csv("assets/data/data.csv").then(function (healthData) {
         .attr("opacity", "1");
 
     // Points labels
-    var circlesLabels = chartGroup.selectAll("text")
+    var circlesLabels = chartGroup.selectAll("textcircl")
         .data(healthData)
         .enter()
         .append("text")
@@ -239,7 +239,6 @@ d3.csv("assets/data/data.csv").then(function (healthData) {
                         .classed("active", false)
                         .classed("inactive", true);
                     break;
-
             }
 
             // Change axis
@@ -252,6 +251,8 @@ d3.csv("assets/data/data.csv").then(function (healthData) {
             // Change points labels
             circlesLabels = renderLabels(circlesLabels, xLinearScale, chosenX);
 
+            // Change tooltips
+            circlesGroup = renderTooltip(chosenX, circlesGroup);
         }
     });
 });
