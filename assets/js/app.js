@@ -89,6 +89,8 @@ function yScale(healthData, chosenY) {
         .range([height, 0]);
     return yLinearScale;
 };
+
+// Function that renders the graph
 function renderGraph(chosenX, chosenY) {
     // Reading and parsing the csv
     d3.csv("assets/data/data.csv").then(function (healthData) {
@@ -135,12 +137,11 @@ function renderGraph(chosenX, chosenY) {
             .attr("font-family", "sans-serif")
             .attr("font-size", 8)
             .style("text-anchor", "middle")
+            .attr("alignment-baseline", "middle")
             .attr("x", d => xLinearScale(d[chosenX]))
             .attr("y", d => yLinearScale(d[chosenY]))
             .attr("fill", "white")
             .text(d => d.abbr);
-
-
     });
 };
 
@@ -154,10 +155,11 @@ renderGraph(chosenX, chosenY);
 // ***************
 
 // X-axis
-// xLabels.selectAll("text").on("click", function () {
-//     // Grab value clicked
-//     var xClicked = d3.select(this).attr("value");
-//     if (value !== chosenX) {
-
-//     }
-// });
+xLabels.selectAll("text").on("click", function () {
+    // Grab value clicked
+    var xClicked = d3.select(this).attr("value");
+    if (xClicked !== chosenX) {
+        chosenX = xClicked;
+        renderGraph(chosenX, chosenY);
+    }
+});

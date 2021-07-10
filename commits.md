@@ -18,3 +18,4 @@
 - Adds y-axis labels
 - Fixes circle labels positioning
     - [] Some labels are missing
+- Adds event listener for x-axis
