@@ -15,3 +15,4 @@
 - Adds x-axis labels
     - [X] All labels won't fit, need to make the chart size responsive
 - Fixes x-axis positioning
+- Adds y-axis labels

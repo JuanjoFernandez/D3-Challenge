@@ -46,6 +46,31 @@ var ageLabel = xLabels.append("text")
     .classed("active", true)
     .text("Household Income (Median)");
 
+// Y-axis labels
+var yLabels = chartGroup.append("g")
+    .attr("transform", "rotate(-90)");
+
+var obeseLabel = yLabels.append("text")
+    .attr("y", -25)
+    .attr("x", - height / 2)
+    .attr("value", "obesity")// value to grab for event listener
+    .classed("active", true)
+    .text("Obese (%)");
+
+var smokeLabel = yLabels.append("text")
+    .attr("y", -45)
+    .attr("x", - height / 2)
+    .attr("value", "smokes")// value to grab for event listener
+    .classed("active", true)
+    .text("Smokes (%)");
+
+var smokeLabel = yLabels.append("text")
+    .attr("y", -65)
+    .attr("x", - height / 2)
+    .attr("value", "healthcare")// value to grab for event listener
+    .classed("active", true)
+    .text("Lacks Healthcare (%)");
+
 
 // Function to create xScale
 function xScale(healthData, chosenX) {
