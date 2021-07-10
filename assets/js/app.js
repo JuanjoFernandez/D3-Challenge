@@ -89,52 +89,75 @@ function yScale(healthData, chosenY) {
         .range([height, 0]);
     return yLinearScale;
 };
+function renderGraph(chosenX, chosenY) {
+    // Reading and parsing the csv
+    d3.csv("assets/data/data.csv").then(function (healthData) {
+        healthData.forEach(function (data) {
+            data.poverty = +data.poverty;
+            data.age = +data.age;
+            data.income = +data.income;
+            data.healthcare = +data.healthcare;
+            data.obesity = +data.obesity;
+            data.smokes = +data.smokes;
+        });
+        // X axis
+        var xLinearScale = xScale(healthData, chosenX);
+        var bottomAxis = d3.axisBottom(xLinearScale);
+        var xAxis = chartGroup.append("g")
+            .classed("x-axis", true)
+            .attr("transform", `translate(0, ${height})`)
+            .call(bottomAxis);
 
-// Reading and parsing the csv
-d3.csv("assets/data/data.csv").then(function (healthData) {
-    healthData.forEach(function (data) {
-        data.healthcare = +data.healthcare;
-        data.poverty = +data.poverty;
+        // Y axis
+        var yLinearScale = yScale(healthData, chosenY);
+        var leftAxis = d3.axisLeft(yLinearScale);
+        var yAxis = chartGroup.append("g")
+            // .classed("y-axis", true)
+            // .attr("transform", `translate(${width}, 0)`)
+            .call(leftAxis)
+
+        // Scatter points
+        var circlesGroup = chartGroup.selectAll("circle")
+            .data(healthData)
+            .enter()
+            .append("circle")
+            .attr("cx", d => xLinearScale(d[chosenX]))
+            .attr("cy", d => yLinearScale(d[chosenY]))
+            .attr("r", 10)
+            .attr("fill", "red")
+            .attr("opacity", "1");
+
+        // Points labels
+        var circlesLabels = chartGroup.selectAll("text")
+            .data(healthData)
+            .enter()
+            .append("text")
+            .attr("font-family", "sans-serif")
+            .attr("font-size", 8)
+            .style("text-anchor", "middle")
+            .attr("x", d => xLinearScale(d[chosenX]))
+            .attr("y", d => yLinearScale(d[chosenY]))
+            .attr("fill", "white")
+            .text(d => d.abbr);
+
+
     });
+};
 
-    // X axis
-    var xLinearScale = xScale(healthData, "poverty");
-    var bottomAxis = d3.axisBottom(xLinearScale);
-    var xAxis = chartGroup.append("g")
-        .classed("x-axis", true)
-        .attr("transform", `translate(0, ${height})`)
-        .call(bottomAxis);
+// Initial graph render
+chosenX = "poverty"
+chosenY = "healthcare"
+renderGraph(chosenX, chosenY);
 
-    // Y axis
-    var yLinearScale = yScale(healthData, "healthcare");
-    var leftAxis = d3.axisLeft(yLinearScale);
-    var yAxis = chartGroup.append("g")
-        // .classed("y-axis", true)
-        // .attr("transform", `translate(${width}, 0)`)
-        .call(leftAxis)
+// ***************
+// Event listeners
+// ***************
 
-    // Scatter points
-    var circlesGroup = chartGroup.selectAll("circle")
-        .data(healthData)
-        .enter()
-        .append("circle")
-        .attr("cx", d => xLinearScale(d.poverty))
-        .attr("cy", d => yLinearScale(d.healthcare))
-        .attr("r", 10)
-        .attr("fill", "red")
-        .attr("opacity", "1");
+// X-axis
+// xLabels.selectAll("text").on("click", function () {
+//     // Grab value clicked
+//     var xClicked = d3.select(this).attr("value");
+//     if (value !== chosenX) {
 
-    // Points labels
-    var circlesLabels = chartGroup.selectAll("text")
-        .data(healthData)
-        .enter()
-        .append("text")
-        .attr("font-family", "sans-serif")
-        .attr("font-size", 8)
-        .attr("x", d => xLinearScale(d.poverty))
-        .attr("y", d => yLinearScale(d.healthcare))
-        .attr("fill", "white")
-        .text(d => d.abbr);
-
-
-});
+//     }
+// });
