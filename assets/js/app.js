@@ -24,9 +24,11 @@ var chartGroup = svg.append("g")
 // Function to create xScale
 function xScale(healthData, chosenX) {
     var xLinearScale = d3.scaleLinear()
-        .domain([d3.min(healthData, d => d[chosenX]) * 0.8,
-        d3.max(healthData, d => d[chosenX]) * 1.2])
+        .domain([d3.min(healthData, d => d[chosenX]),
+        d3.max(healthData, d => d[chosenX])])
         .range([0, width]);
+        console.log(d3.min(healthData, d => d[chosenX]));
+        console.log(d3.max(healthData, d => d[chosenX]));
     return xLinearScale;
 };
 
@@ -67,9 +69,9 @@ d3.csv("assets/data/data.csv").then(function (healthData) {
     .data(healthData)
     .enter()
     .append("circle")
-    .attr("cx", d => d.poverty)
-    .attr("cy", d => d.healthcare)
-    .attr("r", 1)
+    .attr("cx", d => xLinearScale(d.poverty))
+    .attr("cy", d => yLinearScale(d.healthcare))
+    .attr("r", 10)
     .attr("fill", "pink")
     .attr("opacity", ".5");
 
