@@ -27,12 +27,10 @@ function xScale(healthData, chosenX) {
         .domain([d3.min(healthData, d => d[chosenX]) * 0.9,
         d3.max(healthData, d => d[chosenX])*1.05])
         .range([0, width]);
-    console.log(d3.min(healthData, d => d[chosenX]));
-    console.log(d3.max(healthData, d => d[chosenX]));
     return xLinearScale;
 };
 
-// function to create yScale
+// Function to create yScale
 function yScale(healthData, chosenY) {
     var yLinearScale = d3.scaleLinear()
         .domain([d3.min(healthData, d => d[chosenY]) * 0.8,
@@ -72,7 +70,30 @@ d3.csv("assets/data/data.csv").then(function (healthData) {
         .attr("cx", d => xLinearScale(d.poverty))
         .attr("cy", d => yLinearScale(d.healthcare))
         .attr("r", 10)
-        .attr("fill", "pink")
-        .attr("opacity", ".5");
+        .attr("fill", "red")
+        .attr("opacity", "1");
+
+    // Points labels
+    var circlesLabels = chartGroup.selectAll("text")
+        .data(healthData)
+        .enter()
+        .append("text")
+        .attr("font-family", "sans-serif")
+        .attr("font-size", 8)
+        .attr("x", d => xLinearScale(d.poverty))
+        .attr("y", d => yLinearScale(d.healthcare))
+        .attr("fill", "white")
+        .text(d => d.abbr);
+
+    //     svg.append("g")
+    //     .attr("font-family", "sans-serif")
+    //     .attr("font-size", 10)
+    //   .selectAll("text")
+    //   .data(data)
+    //   .join("text")
+    //     .attr("dy", "0.35em")
+    //     .attr("x", d => x(d.x) + 7)
+    //     .attr("y", d => y(d.y))
+    //     .text(d => d.name);
 
 });

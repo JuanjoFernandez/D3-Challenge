@@ -10,3 +10,5 @@
 - Renders scatter points
 - Fixes scatter points scale
 - Adds padding in both scales
+- Adds circles labels
+    - [] Position is off, needs debugging
