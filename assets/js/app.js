@@ -24,11 +24,11 @@ var chartGroup = svg.append("g")
 // Function to create xScale
 function xScale(healthData, chosenX) {
     var xLinearScale = d3.scaleLinear()
-        .domain([d3.min(healthData, d => d[chosenX]),
-        d3.max(healthData, d => d[chosenX])])
+        .domain([d3.min(healthData, d => d[chosenX]) * 0.9,
+        d3.max(healthData, d => d[chosenX])*1.05])
         .range([0, width]);
-        console.log(d3.min(healthData, d => d[chosenX]));
-        console.log(d3.max(healthData, d => d[chosenX]));
+    console.log(d3.min(healthData, d => d[chosenX]));
+    console.log(d3.max(healthData, d => d[chosenX]));
     return xLinearScale;
 };
 
@@ -36,7 +36,7 @@ function xScale(healthData, chosenX) {
 function yScale(healthData, chosenY) {
     var yLinearScale = d3.scaleLinear()
         .domain([d3.min(healthData, d => d[chosenY]) * 0.8,
-        d3.max(healthData, d => d[chosenY] * 1.2)])
+        d3.max(healthData, d => d[chosenY]) * 1.05])
         .range([height, 0]);
     return yLinearScale;
 };
@@ -66,13 +66,13 @@ d3.csv("assets/data/data.csv").then(function (healthData) {
 
     // Scatter points
     var circlesGroup = chartGroup.selectAll("circle")
-    .data(healthData)
-    .enter()
-    .append("circle")
-    .attr("cx", d => xLinearScale(d.poverty))
-    .attr("cy", d => yLinearScale(d.healthcare))
-    .attr("r", 10)
-    .attr("fill", "pink")
-    .attr("opacity", ".5");
+        .data(healthData)
+        .enter()
+        .append("circle")
+        .attr("cx", d => xLinearScale(d.poverty))
+        .attr("cy", d => yLinearScale(d.healthcare))
+        .attr("r", 10)
+        .attr("fill", "pink")
+        .attr("opacity", ".5");
 
 });

@@ -8,3 +8,5 @@
 - Fixes x axis render
 - Renders y axis
 - Renders scatter points
+- Fixes scatter points scale
+- Adds padding in both scales
