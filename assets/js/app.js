@@ -119,13 +119,13 @@ function renderLabels(circlesLabels, xLinearScale, chosenX) {
 function renderTooltip(chosenX, circlesGroup) {
     var toolTip = d3.tip()
         .attr("class", "tooltip")
-        .offset([80, -60])
+        .offset([0, 0])
         .html(function (d) {
-            return (`x:${d[chosenX]} y:${d[chosenY]}`)
+            return (`${d.state}<br>${chosenX}: ${d[chosenX]}<br>${chosenY}:${d[chosenY]}`)
         });
     circlesGroup.call(toolTip);
     circlesGroup.on("mouseover", function (data) {
-        toolTip.show(data);
+        toolTip.show(data, this);
     })
         .on("mouseout", function (data, index) {
             toolTip.hide(data);
