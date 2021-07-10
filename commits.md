@@ -24,3 +24,7 @@
 - Adds tooltips
 - Fixes circle labels
 - Formats tooltips
+
+# 07/10/2021
+- Adds event listener for y-label
+- Re-renders y axis and scatter points

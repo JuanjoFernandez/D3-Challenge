@@ -108,11 +108,19 @@ function renderY(yLinearScale, yAxis) {
     return yAxis;
 }
 
-// Function to update scatter points
+// Function to update scatter points x
 function renderScatter(circlesGroup, xLinearScale, chosenX) {
     circlesGroup.transition()
         .duration(1000)
         .attr("cx", d => xLinearScale(d[chosenX]));
+    return circlesGroup;
+}
+
+// Function to update scatter points y
+function renderScatterY(circlesGroup, yLinearScale, chosenY) {
+    circlesGroup.transition()
+        .duration(1000)
+        .attr("cy", d => yLinearScale(d[chosenY]));
     return circlesGroup;
 }
 
@@ -315,7 +323,7 @@ d3.csv("assets/data/data.csv").then(function (healthData) {
             yAxis = renderY(yLinearScale, yAxis);
 
             // Change scatter points
-            circlesGroup = renderScatter(circlesGroup, xLinearScale, chosenX);
+            circlesGroup = renderScatterY(circlesGroup, yLinearScale, chosenY);
 
             // Change points labels
             circlesLabels = renderLabels(circlesLabels, xLinearScale, chosenX);
