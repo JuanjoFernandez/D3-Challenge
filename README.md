@@ -1,3 +1,4 @@
+![header](assets/images/header.jpg)
 # d3-challenge
 
 # Project Overview

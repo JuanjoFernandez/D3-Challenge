@@ -1,3 +1,5 @@
+![header](assets/images/header.jpg)
+
 # 07/08/2021
 - Initial commit
 - Creates file structure
@@ -30,3 +32,4 @@
 - Re-renders y axis and scatter points
 - Re-renders scatter points labels
 - Styles the html
+- Adds header to md files
