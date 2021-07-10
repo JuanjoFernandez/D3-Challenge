@@ -79,7 +79,16 @@ function xScale(healthData, chosenX) {
         d3.max(healthData, d => d[chosenX]) * 1.05])
         .range([0, width]);
     return xLinearScale;
-};
+}
+
+// Function to render new x axis
+function renderX(xLinearScale, xAxis) {
+    var bottomAxis = d3.axisBottom(xLinearScale);
+    xAxis.transition()
+        .duration(1000)
+        .call(bottomAxis);
+    return xAxis;
+}
 
 // Function to create yScale
 function yScale(healthData, chosenY) {
@@ -195,7 +204,8 @@ d3.csv("assets/data/data.csv").then(function (healthData) {
             }
 
             // Change axis
-            xScale (healthData, chosenX);
+            var xLinearScale = xScale(healthData, chosenX);
+            xAxis = renderX(xLinearScale, xAxis);
 
         }
     });

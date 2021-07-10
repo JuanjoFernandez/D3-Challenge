@@ -20,3 +20,4 @@
     - [] Some labels are missing
 - Adds event listener for x-axis
 - Adds x-axis label responsive styling
+- Adds transition for x-axis
