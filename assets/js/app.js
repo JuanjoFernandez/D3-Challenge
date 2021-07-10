@@ -99,6 +99,41 @@ function yScale(healthData, chosenY) {
     return yLinearScale;
 };
 
+// Function to update scatter points
+function renderScatter(circlesGroup, xLinearScale, chosenX) {
+    circlesGroup.transition()
+        .duration(1000)
+        .attr("cx", d => xLinearScale(d[chosenX]));
+    return circlesGroup;
+}
+
+// Function to update scatter points labels
+function renderLabels(circlesLabels, xLinearScale, chosenX) {
+    circlesLabels.transition()
+        .duration(1000)
+        .attr("x", d => xLinearScale(d[chosenX]));
+    return circlesLabels;
+}
+
+// Function for tooltips
+function renderTooltip(chosenX, circlesGroup) {
+    var toolTip = d3.tip()
+        .attr("class", "tooltip")
+        .offset([80, -60])
+        .html(function (d) {
+            return (`x:${d[chosenX]} y:${d[chosenY]}`)
+        });
+    circlesGroup.call(toolTip);
+    circlesGroup.on("mouseover", function (data) {
+        toolTip.show(data);
+    })
+        .on("mouseout", function (data, index) {
+            toolTip.hide(data);
+        });
+
+    return circlesGroup;
+}
+
 // Initial parameters
 chosenX = "poverty";
 chosenY = "healthcare";
@@ -153,6 +188,10 @@ d3.csv("assets/data/data.csv").then(function (healthData) {
         .attr("y", d => yLinearScale(d[chosenY]))
         .attr("fill", "white")
         .text(d => d.abbr);
+
+    // Tooltips
+    var circlesGroup = renderTooltip(chosenX, circlesGroup);
+
     // ***************
     // Event listeners
     // ***************
@@ -206,6 +245,12 @@ d3.csv("assets/data/data.csv").then(function (healthData) {
             // Change axis
             var xLinearScale = xScale(healthData, chosenX);
             xAxis = renderX(xLinearScale, xAxis);
+
+            // Change scatter points
+            circlesGroup = renderScatter(circlesGroup, xLinearScale, chosenX);
+
+            // Change points labels
+            circlesLabels = renderLabels(circlesLabels, xLinearScale, chosenX);
 
         }
     });
