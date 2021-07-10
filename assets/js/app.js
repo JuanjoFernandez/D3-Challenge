@@ -124,11 +124,19 @@ function renderScatterY(circlesGroup, yLinearScale, chosenY) {
     return circlesGroup;
 }
 
-// Function to update scatter points labels
+// Function to update scatter points labels x
 function renderLabels(circlesLabels, xLinearScale, chosenX) {
     circlesLabels.transition()
         .duration(1000)
         .attr("x", d => xLinearScale(d[chosenX]));
+    return circlesLabels;
+}
+
+// Function to update scatter points labels y
+function renderLabelsY(circlesLabels, yLinearScale, chosenY) {
+    circlesLabels.transition()
+        .duration(1000)
+        .attr("y", d => yLinearScale(d[chosenY]));
     return circlesLabels;
 }
 
@@ -326,7 +334,7 @@ d3.csv("assets/data/data.csv").then(function (healthData) {
             circlesGroup = renderScatterY(circlesGroup, yLinearScale, chosenY);
 
             // Change points labels
-            circlesLabels = renderLabels(circlesLabels, xLinearScale, chosenX);
+            circlesLabels = renderLabelsY(circlesLabels, yLinearScale, chosenY);
 
             // Change tooltips
             circlesGroup = renderTooltip(chosenX, circlesGroup);
